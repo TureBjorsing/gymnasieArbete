@@ -1,2 +1,20 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+    import '$lib/global.scss';
+    import Private from '$lib/components/Private.svelte';
+    import Public from '$lib/components/Public.svelte';
+
+    async function isLoggedIn() {
+        const response = await fetch('/api/isLoggedIn.php');
+        return await response.json();
+    }
+ </script>
+
+{#await isLoggedIn() then data}
+    {#if data?.loggedIn}
+        <Private />
+    {:else}
+        <Public />
+    {/if}
+{:catch error}
+    <p>Error: {error.messages}</p>
+{/await}
