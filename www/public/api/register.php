@@ -9,6 +9,9 @@
 
         $success = register($user, $firstname, $lastname, $pwd);
 
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+
         if ($success) {
             echo json_encode(["success" => true]);
         } else {

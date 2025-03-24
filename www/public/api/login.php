@@ -8,6 +8,9 @@
 
         $response = auth($user, $pwd);
 
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+
         if ($response['auth']) {
             session_regenerate_id();
 

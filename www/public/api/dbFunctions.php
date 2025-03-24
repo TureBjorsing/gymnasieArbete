@@ -1,4 +1,8 @@
 <?php
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }   
+
     function connectToDb() {
         // Definierar konstanter med användarinformation.
         define ('DB_USER', 'gymnasieArbete');
@@ -56,5 +60,30 @@
         }
 
         return $success;
+    }
+
+    function getCourse() {
+        $db = connectToDb();
+
+        if (!isset($_SESSION['user'])) {
+            return ["error" => "User not logged in"];
+        }
+
+        $stmt = $db->prepare("SELECT * FROM course WHERE userName = :user");
+        $stmt->bindValue(':user', $_SESSION['user']);
+        $stmt->execute();
+
+        $response = [];
+
+        if($stmt->rowCount() == 1) {
+            $course = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $response['name'] = $course['name'];
+            $response['holes'] = $course['holes'];
+            $response['bestScore'] = $course['bestScore'];
+            $response['par'] = $course['par'];
+        }
+
+        return $response;
     }
 ?>
