@@ -14,7 +14,7 @@
     {#if course.error == "Course not found"}
     <h1>Empty</h1>
     {:else}
-        <section onclick={() => location.href="spela"} role="none">
+        <section onclick={() => location.href="spela/" + course.name + "/" + course.holes} role="none">
             <h1>{course.name}</h1>
             <p>Holes: {course.holes}</p>
             <p>Par: {course.par}</p>

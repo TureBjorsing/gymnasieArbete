@@ -15,6 +15,7 @@
             session_regenerate_id();
 
             echo json_encode(["success" => true]);
+            $_SESSION['uid'] = $response['uid'];
             $_SESSION['user'] = $response['user'];
             $_SESSION['firstname'] = $response['firstname'];
             $_SESSION['lastname'] = $response['lastname'];

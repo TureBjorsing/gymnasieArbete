@@ -31,6 +31,7 @@
 
             if(password_verify($pwd, $user['password'])) {
                 $response['auth'] = true;
+                $response['uid'] = $user['uid'];
                 $response['user'] = $user['username'];
                 $response['firstname'] = $user['firstname'];
                 $response['lastname'] = $user['lastname'];
@@ -85,5 +86,20 @@
         }
 
         return $response;
+    }
+
+    function getHoles($cName) {
+        $db = connectToDb();
+
+        if (!isset($_SESSION['user'])) {
+            return ["error" => "User not logged in"];
+        }
+
+        $stmt = $db->prepare("SELECT hid, par FROM `hole` WHERE courseName LIKE :name AND uid = :uid");
+        $stmt->bindValue(':name', $cName);
+        $stmt->bindValue(':uid', $_SESSION['uid']);
+        $stmt->execute();
+
+        return $stmt->fetchALL(PDO::FETCH_ASSOC);
     }
 ?>
