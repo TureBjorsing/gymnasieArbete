@@ -1,4 +1,6 @@
 <script>
+    import { onMount } from "svelte";
+
     async function getCourses() {
         const url = '/api/getCourse.php';
         
@@ -7,7 +9,7 @@
         return courses;
     }
 
-    getCourses();
+    onMount(() => { getCourses(); });
 </script>
 
 {#await getCourses() then course}
