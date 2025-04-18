@@ -5,10 +5,12 @@
 
     function connectToDb() {
         // Definierar konstanter med användarinformation.
-        define ('DB_USER', 'gymnasieArbete');
-        define ('DB_PASSWORD', '12345');
-        define ('DB_HOST', 'mariadb'); // mariadb om docker annars localhost
-        define ('DB_NAME', 'gymnasieArbete');
+        if(!defined('DB_USER')) { // kollar ifall dom redan är defined
+            define ('DB_USER', 'gymnasieArbete');
+            define ('DB_PASSWORD', '12345');
+            define ('DB_HOST', 'mariadb'); // mariadb om docker annars localhost
+            define ('DB_NAME', 'gymnasieArbete');
+        }
         
         // Skapar en anslutning till MySql och databasen egytalk
         $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8';
@@ -74,32 +76,79 @@
         $stmt->bindValue(':user', $_SESSION['user']);
         $stmt->execute();
 
-        $response = [];
-
-        if($stmt->rowCount() == 1) {
-            $course = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            $response['name'] = $course['name'];
-            $response['holes'] = $course['holes'];
-            $response['bestScore'] = $course['bestScore'];
-            $response['par'] = $course['par'];
-        }
-
-        return $response;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getHoles($cName) {
+    function getHoles($cid) {
         $db = connectToDb();
 
         if (!isset($_SESSION['user'])) {
             return ["error" => "User not logged in"];
         }
 
-        $stmt = $db->prepare("SELECT hid, par FROM `hole` WHERE courseName LIKE :name AND uid = :uid");
-        $stmt->bindValue(':name', $cName);
+        $stmt = $db->prepare("SELECT hid, par FROM `hole` WHERE cid LIKE :cid AND uid = :uid");
+        $stmt->bindValue(':cid', $cid);
         $stmt->bindValue(':uid', $_SESSION['uid']);
         $stmt->execute();
 
         return $stmt->fetchALL(PDO::FETCH_ASSOC);
+    }
+
+    function sendStats($fairwayMissL, $fairwayMissR, $fairwayHit, $greenHit, $score, $cid) {
+        $db = connectToDb();
+
+        $stmt = $db->prepare("INSERT INTO stats(uid, cid, fairwayMissL, fairwayMissR, fairwayHit, greenHit, score) VALUES(:uid, :cid, :left, :right, :middle, :green, :score)");
+
+        $stmt->bindValue(":uid", $_SESSION['uid']);
+        $stmt->bindValue(":cid", $cid);
+        $stmt->bindValue(":left", $fairwayMissL);
+        $stmt->bindValue(":right", $fairwayMissR);
+        $stmt->bindValue(":middle", $fairwayHit);
+        $stmt->bindValue(":green", $greenHit);
+        $stmt->bindValue(":score", $score);
+
+        $stmt->execute();
+    }
+
+    function changeStats($cid) {
+        $db = connectToDb();
+
+        $stmt = $db->prepare("SELECT * FROM stats WHERE cid LIKE :cid AND uid = :uid");
+
+        $stmt->bindValue(":cid", $cid);
+        $stmt->bindValue(":uid", $_SESSION['uid']);
+
+        $stmt->execute();
+        $stats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $fairwayMissL = 0;
+        $fairwayMissR = 0;
+        $fairwayHit = 0;
+        $greenHit = 0;
+        $score = 0;
+        for($i = 0; $i < count($stats); $i++) {
+            $fairwayMissL += $stats[$i]['fairwayMissL'];
+            $fairwayMissR += $stats[$i]['fairwayMissR'];
+            $fairwayHit += $stats[$i]['fairwayHit'];
+            $greenHit += $stats[$i]['greenHit'];
+            $score += $stats[$i]['score'];
+        }
+
+        $AllFairwayMissL = $fairwayMissL / count($stats);
+        $AllFairwayMissR = $fairwayMissR / count($stats);
+        $AllFairwayHit = $fairwayHit / count($stats);
+        $AllGreenHit = $greenHit / count($stats);
+        $AllScore = $score / count($stats);
+
+        $stmt2 = $db->prepare("UPDATE course SET fairwayMissL = :left, fairwayMissR = :right, fairwayHit = :hit, greenHit = :green, averageScore = :score WHERE cid = :cid");
+
+        $stmt2->bindValue(":left", $AllFairwayMissL);
+        $stmt2->bindValue(":right", $AllFairwayMissR);
+        $stmt2->bindValue(":hit", $AllFairwayHit);
+        $stmt2->bindValue(":green", $AllGreenHit);
+        $stmt2->bindValue(":score", $AllScore);
+        $stmt2->bindValue(":cid", $cid);
+
+        $stmt2->execute();
     }
 ?>

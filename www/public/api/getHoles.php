@@ -4,9 +4,9 @@
         session_start();
     }   
 
-    $cName = $_GET['cName'];
+    $cid = $_GET['cid'];
 
-    $holes = getHoles($cName);
+    $holes = getHoles($cid);
 
     // echo json_encode(["error" => "Holes not found"]);
     echo json_encode($holes);
