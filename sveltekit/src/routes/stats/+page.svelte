@@ -1,6 +1,7 @@
 <script>
+    import CourseStats from "$lib/components/CourseStats.svelte";
+
     import { onMount } from "svelte";
-    import Course from "$lib/components/Course.svelte";
 
     async function getCourses() {
         const url = '/api/getCourse.php';
@@ -15,17 +16,12 @@
 
 {#await getCourses() then course}
     {#if course.error == "Course not found"}
-    <h1>Tomt</h1>
+    <h1>Empty</h1>
     {:else}
         {#each course as course}
-            <Course courseData={course} />
+            <CourseStats courseData={course}/>
         {/each}
     {/if}
-    <button onclick={() => location.href="/createCourse"}>Lägg till bana</button>
 {:catch error}
     <p>Error: {error.message}</p>
 {/await}
-
-<style lang="scss">
-
-</style>

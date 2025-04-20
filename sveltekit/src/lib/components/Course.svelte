@@ -6,8 +6,8 @@
     <h1>{courseData.name}</h1>
     <p>Holes: {courseData.holes}</p>
     <p>Par: {courseData.par}</p>
-    {#if !isNaN(courseData.bestScore)}
-        <p>Best Score: {courseData.bestScore}</p>
+    {#if !isNaN(courseData.averageScore)}
+        <p>Average Score: {courseData.averageScoreScore}</p>
     {/if}
 </section>
 

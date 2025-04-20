@@ -1,6 +1,5 @@
 <script>
     import { page } from '$app/state';
-    let { data } = $props();
 
     import { onMount } from "svelte";
 
@@ -112,8 +111,6 @@
             greenMissPercent.down = greenMissD / holeArr.length;
             greenMissPercent.hit = greenHit / holeArr.length;
 
-            alert("klar " + score);
-
             showResults = true;
         } else {
             alert("Något hål saknar score");
@@ -147,8 +144,8 @@
         <button onclick={() => holeArr[currentHole - 1].green = "d"}>&#8595;</button>
 
         <br>
-        <button onclick={previousHole}>Back</button>
-        <button onclick={nextHole}>Next</button>
+        <button onclick={previousHole}>Backa</button>
+        <button onclick={nextHole}>Nästa</button>
 
         <table>
             <tbody>

@@ -68,12 +68,12 @@
     function getCourse() {
         $db = connectToDb();
 
-        if (!isset($_SESSION['user'])) {
+        if (!isset($_SESSION['uid'])) {
             return ["error" => "User not logged in"];
         }
 
-        $stmt = $db->prepare("SELECT * FROM course WHERE userName = :user");
-        $stmt->bindValue(':user', $_SESSION['user']);
+        $stmt = $db->prepare("SELECT * FROM course WHERE uid = :uid");
+        $stmt->bindValue(':uid', $_SESSION['uid']);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -150,5 +150,39 @@
         $stmt2->bindValue(":cid", $cid);
 
         $stmt2->execute();
+    }
+
+    function createCourse($name, $holeNum) {
+        $db = connectToDb();
+
+        $stmt = $db->prepare("INSERT INTO course(cid, uid, name, holes) VALUES(UUID(), :uid, :name, :holes)");
+        $stmt->bindValue(":uid", $_SESSION['uid']);
+        $stmt->bindValue(":name", $name);
+        $stmt->bindValue(":holes", $holeNum);
+
+        try {
+            $stmt->execute();
+        } catch (Exception $e) {
+            return "error";
+        }
+
+        $stmt2 = $db->prepare("SELECT cid, name FROM course WHERE name LIKE :name");
+        $stmt2->bindValue(":name", $name);
+
+        $stmt2->execute();
+
+        return $stmt2->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function createHole($par, $cid, $name) {
+        $db = connectToDb();
+
+        $stmt = $db->prepare("INSERT INTO hole(uid, cid, courseName, par) VALUES(:uid, :cid, :name, :par)");
+        $stmt->bindValue(':uid', $_SESSION['uid']);
+        $stmt->bindValue(':cid', $cid);
+        $stmt->bindValue(':name', $name);
+        $stmt->bindValue(':par', $par);
+
+        $stmt->execute();
     }
 ?>

@@ -10,7 +10,7 @@
  </script>
 
 {#await isLoggedIn() then data}
-    {#if data?.loggedIn}
+    {#if data.loggedIn}
         <Private />
     {:else}
         <Public />

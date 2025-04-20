@@ -39,4 +39,4 @@
 <p>{Math.floor(greenMissPercent.right * 100)}%</p>
 <p>{Math.floor(greenMissPercent.down * 100)}%</p>
 
-<button>Gå vidare</button>
+<button onclick={() => location.href = '/'}>Gå vidare</button>

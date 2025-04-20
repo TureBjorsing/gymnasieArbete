@@ -1,0 +1,21 @@
+<script>
+    let { courseData } = $props();
+</script>
+
+<section>
+    <h1>{courseData.name}</h1>
+    <p>Holes: {courseData.holes}</p>
+    <p>Par: {courseData.par}</p>
+    <p>Average Score: {Math.floor(courseData.averageScore)}</p>
+    <p>Fairway: {courseData.averageScore}</p>
+    <br>
+    <p>Vänster: {Math.floor(courseData.fairwayMissL * 100)}%</p>
+    <p>Mitten: {Math.floor(courseData.fairwayHit * 100)}%</p>
+    <p>Höger: {Math.floor(courseData.fairwayMissR * 100)}%</p>
+</section>
+
+<style lang="scss">
+    section {
+        border: solid 1px;
+    }
+</style>
