@@ -26,5 +26,8 @@
     <label for="holeNum">Antal hål</label>
     <input type="number" name="holeNum"><br>
 
+    <label for="Par">Banans par</label>
+    <input type="number" name="par"><br>
+
     <input type="submit" value="Gå vidare">
 </form>

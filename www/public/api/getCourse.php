@@ -1,11 +1,7 @@
 <?php
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }   
-
     include_once("dbFunctions.php");
 
-    $course = getCourse();
+    $course = getCourse($_GET['cid']);
 
     if (!empty($course)) {
         echo json_encode($course);

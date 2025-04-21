@@ -37,6 +37,7 @@
                 $response['user'] = $user['username'];
                 $response['firstname'] = $user['firstname'];
                 $response['lastname'] = $user['lastname'];
+                $response['lastPlayed'] = $user['lastPlayed'];
             }
         }
 
@@ -65,15 +66,20 @@
         return $success;
     }
 
-    function getCourse() {
+    function getCourse($cid) {
         $db = connectToDb();
 
         if (!isset($_SESSION['uid'])) {
             return ["error" => "User not logged in"];
         }
 
-        $stmt = $db->prepare("SELECT * FROM course WHERE uid = :uid");
-        $stmt->bindValue(':uid', $_SESSION['uid']);
+        if($cid = "none") {
+            $stmt = $db->prepare("SELECT * FROM course WHERE uid = :uid");
+            $stmt->bindValue(':uid', $_SESSION['uid']);
+        } else {
+            $stmt = $db->prepare("SELECT * FROM course WHERE cid = :cid");
+            $stmt->bindValue(':cid', $cid);
+        }
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -108,6 +114,12 @@
         $stmt->bindValue(":score", $score);
 
         $stmt->execute();
+
+        $stmt2 = $db->prepare("UPDATE user SET lastPlayed = :cid WHERE uid LIKE :uid");
+        $stmt2->bindValue(":cid", $cid);
+        $stmt2->bindValue(":uid", $_SESSION['uid']);
+
+        $stmt2->execute();
     }
 
     function changeStats($cid) {
@@ -152,13 +164,14 @@
         $stmt2->execute();
     }
 
-    function createCourse($name, $holeNum) {
+    function createCourse($name, $holeNum, $par) {
         $db = connectToDb();
 
-        $stmt = $db->prepare("INSERT INTO course(cid, uid, name, holes) VALUES(UUID(), :uid, :name, :holes)");
+        $stmt = $db->prepare("INSERT INTO course(cid, uid, name, holes, par) VALUES(UUID(), :uid, :name, :holes, :par)");
         $stmt->bindValue(":uid", $_SESSION['uid']);
         $stmt->bindValue(":name", $name);
         $stmt->bindValue(":holes", $holeNum);
+        $stmt->bindValue(":par", $par);
 
         try {
             $stmt->execute();
@@ -182,6 +195,15 @@
         $stmt->bindValue(':cid', $cid);
         $stmt->bindValue(':name', $name);
         $stmt->bindValue(':par', $par);
+
+        $stmt->execute();
+    }
+
+    function deleteCourse($cid) {
+        $db = connectToDb();
+
+        $stmt = $db->prepare("DELETE FROM course WHERE cid LIKE :cid");
+        $stmt->bindValue(":cid", $cid);
 
         $stmt->execute();
     }

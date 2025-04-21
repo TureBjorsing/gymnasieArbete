@@ -31,6 +31,6 @@
     <input type="submit" >
 </form>
 
-<p>{check?.success ? "Du är registrerad" : ""}</p>
+<p>{check.success ? "Du är registrerad" : ""}</p>
 
-<a href="login">Logga in</a>
+<a href="/">Logga in</a>

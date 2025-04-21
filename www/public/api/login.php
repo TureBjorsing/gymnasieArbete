@@ -19,6 +19,7 @@
             $_SESSION['user'] = $response['user'];
             $_SESSION['firstname'] = $response['firstname'];
             $_SESSION['lastname'] = $response['lastname'];
+            $_SESSION['lastPlayed'] = $response['lastPlayed'];
         } else {
             echo json_encode(["success" => false]);
         }

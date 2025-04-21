@@ -4,7 +4,7 @@
 
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $response = createCourse($name, $_POST['holeNum']);
+        $response = createCourse($name, $_POST['holeNum'], $_POST['par']);
 
         if($response === "error") {
             echo json_encode(["error" => true]);

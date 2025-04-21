@@ -4,7 +4,7 @@
     import { onMount } from "svelte";
 
     async function getCourses() {
-        const url = '/api/getCourse.php';
+        const url = '/api/getCourse.php?cid=none';
         
         const response = await fetch(url);
         const courses = await response.json();
