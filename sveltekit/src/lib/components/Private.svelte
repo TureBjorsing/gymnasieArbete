@@ -20,11 +20,11 @@
         return courses;
     }
 
-    onMount(() => { getCourse(); });
+    onMount(() => { getUser(); });
 </script>
 
 {#await getUser() then user}
-{#await getCourse() then course}
+{#await getCourse(user.lastPlayed) then course}
     <section id="welcome">
         <p>Välkommen, {user.firstname} {user.lastname}!</p>
         <p>Hoppas du har en fantastisk dag för golf!</p>

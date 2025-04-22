@@ -44,6 +44,17 @@
         return $response;
     }
 
+    function getLastPlayed() {
+        $db = connectToDb();
+
+        $stmt = $db->prepare("SELECT lastPlayed FROM user WHERE uid = :uid");
+        $stmt->bindValue(':uid', $_SESSION['uid']);
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     function register($user, $firstname, $lastname, $pwd) {
         $db = connectToDb();
 
@@ -73,7 +84,7 @@
             return ["error" => "User not logged in"];
         }
 
-        if($cid = "none") {
+        if($cid == "none") {
             $stmt = $db->prepare("SELECT * FROM course WHERE uid = :uid");
             $stmt->bindValue(':uid', $_SESSION['uid']);
         } else {

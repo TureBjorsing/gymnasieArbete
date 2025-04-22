@@ -35,41 +35,43 @@
 
 <style lang="scss">
     form {
-        max-width: 400px;
+        max-width: 40rem;
         margin: 2rem auto;
-        padding: 1.5rem;
-        border: 1px solid #ccc;
+        padding: 2rem;
+        border: 1px solid #ddd;
         border-radius: 8px;
         background-color: #f9f9f9;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
 
         label {
             display: block;
+            font-size: 1.6rem;
             margin-bottom: 0.5rem;
             font-weight: bold;
             color: #333;
         }
 
         input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
+            width: 90%;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 1.4rem;        
         }
 
         input[type="submit"] {
-            width: 100¤;
-            padding: 0.75rem;
+            width: 70%;
+            padding: 1rem;
             background-color: #00796b; // Medium grön
             color: white;
             border: none;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 1.6rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.3s;
 
             &:hover {
                 background-color: #004d40; // mörkgrönt

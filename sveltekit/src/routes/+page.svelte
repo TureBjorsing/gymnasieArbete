@@ -9,6 +9,10 @@
     }
  </script>
 
+<svelte:head>
+  <title>Hem</title>
+</svelte:head>
+
 {#await isLoggedIn() then data}
     {#if data.loggedIn}
         <Private />
