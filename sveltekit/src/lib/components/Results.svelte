@@ -168,4 +168,46 @@
             background-color: #003d33;
         }
     }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2.2rem;
+        }
+
+        #score {
+            font-size: 1.4rem;
+        }
+
+        #fairwayItems p, #greenItems p {
+            font-size: 1.5rem;
+            height: 9rem;
+            width: 3.5rem;
+        }
+
+        button {
+            font-size: 1.3rem;
+            padding: 1rem 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 2rem;
+        }
+
+        #score {
+            font-size: 1.3rem;
+        }
+
+        #fairwayItems p, #greenItems p {
+            font-size: 1.4rem;
+            height: 8rem;
+            width: 3rem;
+        }
+
+        button {
+            font-size: 1.2rem;
+            padding: 0.8rem 1.8rem;
+        }
+    }
 </style>

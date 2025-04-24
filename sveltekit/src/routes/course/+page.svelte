@@ -61,4 +61,10 @@
         display: block;
         text-align: center;
     }
+
+    @media (max-width: 768px) {
+        .courseGrid {
+            display:block;
+        }
+    }
 </style>

@@ -396,4 +396,47 @@
             background-color: #b71c1c;
         }
     }
+
+    @media (max-width: 768px) {
+        #holeInfo h2 {
+            font-size: 2.2rem;
+        }
+
+        #holeInfo p {
+            font-size: 1.4rem;
+        }
+
+        button {
+            font-size: 1.3rem; 
+        }
+
+        table td {
+            font-size: 1.3rem;
+        } 
+    }
+
+    @media (max-width: 480px) {
+        #holeInfo h2 {
+            font-size: 2rem;
+        }
+
+        #holeInfo p {
+            font-size: 1.3rem;
+        }
+
+        button {
+            font-size: 1.2rem;
+            padding: 0.6rem 1.2rem;
+        }
+
+        table td {
+            font-size: 1.2rem;
+            padding: 0.8rem 1rem;
+        }
+
+        #endBtn {
+            font-size: 1.4rem;
+            padding: 1rem 2rem;
+        }
+    }
 </style>

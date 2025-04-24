@@ -99,7 +99,49 @@
 
     #logout {
         display: flex;
-        justify-content: center; // centrera horizontellt
+        justify-content: center;
         margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        #welcome {
+            padding: 0.8rem;
+            p {
+                font-size: 1.4rem;
+            }
+        }
+
+        #recentActivity {
+            padding: 0.8rem;
+            h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        a {
+            padding: 0.8rem 1.5rem;
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #welcome {
+            padding: 0.5rem;
+            p {
+                font-size: 1.6rem;
+            }
+        }
+
+        #recentActivity {
+            padding: 0.5rem;
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        a {
+            padding: 0.8rem 1.5rem;
+            font-size: 1.4rem;
+        }
     }
 </style>

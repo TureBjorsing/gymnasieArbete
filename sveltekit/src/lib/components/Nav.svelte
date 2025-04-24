@@ -1,10 +1,13 @@
-<ul>
-    <li><a href="/">Hem</a></li>
-    <li><a href="/course">Spela</a></li>
-    <li><a href="/stats">Statistik</a></li>
-</ul>
+<nav>
+    <ul>
+        <li><a href="/">Hem</a></li>
+        <li><a href="/course">Spela</a></li>
+        <li><a href="/stats">Statistik</a></li>
+    </ul>
+</nav>
 
 <style lang="scss">
+    
     ul {
         list-style: none;
         display: flex;

@@ -40,5 +40,12 @@
         margin-top: 2rem;
         margin-left: 1rem;
         margin-right: 1rem;
+        padding-bottom: 5rem;
+    }
+
+    @media (max-width: 768px) {
+        .courseGrid {
+            display:block;
+        }
     }
 </style>

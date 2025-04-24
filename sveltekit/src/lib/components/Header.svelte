@@ -47,4 +47,29 @@
             font-size: 1.5rem;
         }
     }
+
+    @media (max-width: 768px) {
+        header {
+            flex-direction: column; // Stack elements vertically
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem; // Smaller font size for phones
+        }
+
+        p {
+            font-size: 1.2rem; // Adjust paragraph font size
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 2.5rem; // Even smaller font size for very small screens
+        }
+
+        p {
+            font-size: 1rem; // Adjust paragraph font size further
+        }
+    }
 </style>
